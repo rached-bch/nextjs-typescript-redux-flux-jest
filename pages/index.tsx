@@ -1,5 +1,6 @@
 import React from "react";
 import { NextPageContext } from "next";
+import Layout from "../components/layout";
 
 interface Props {
   userAgent?: string;
@@ -13,6 +14,6 @@ export default class Index extends React.Component<Props> {
 
   render() {
     const { userAgent } = this.props;
-    return <main>Your user agent: {userAgent}</main>;
+    return <Layout>Your user agent: {userAgent}</Layout>;
   }
 }
