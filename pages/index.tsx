@@ -1,16 +1,18 @@
-import { NextPage } from "next";
+import React from "react";
+import { NextPageContext } from "next";
 
 interface Props {
   userAgent?: string;
 }
 
-const Index: NextPage<Props> = ({ userAgent }) => (
-  <main>Your user agent: {userAgent}</main>
-);
+export default class Index extends React.Component<Props> {
+  static async getInitialProps({ req }: NextPageContext) {
+    const userAgent = req ? req.headers["user-agent"] : navigator.userAgent;
+    return { userAgent };
+  }
 
-Index.getInitialProps = async ({ req }) => {
-  const userAgent = req ? req.headers["user-agent"] : navigator.userAgent;
-  return { userAgent };
-};
-
-export default Index;
+  render() {
+    const { userAgent } = this.props;
+    return <main>Your user agent: {userAgent}</main>;
+  }
+}
