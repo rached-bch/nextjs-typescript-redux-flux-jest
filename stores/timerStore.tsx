@@ -25,6 +25,19 @@ export default class TimerStore extends EventEmitter {
     this.showCounter = false;
     this.emit("change");
   }
+
+  handleActions(action: string) {
+    switch (action) {
+      case "START_COUNTER": {
+        this.startCounter();
+        break;
+      }
+      case "STOP_COUNTER": {
+        this.stopCounter();
+        break;
+      }
+    }
+  }
 }
 
 // let timerStore = new TimerStore();

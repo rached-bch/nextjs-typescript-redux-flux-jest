@@ -1,5 +1,7 @@
 import React from "react";
 import TimerStore from "../stores/timerStore";
+import { Dispatcher } from "flux";
+import { startCounter, stopCounter } from "../actions/timerActions";
 
 export default class Timer extends React.Component<any> {
   //   static async getInitialProps({ req }: any) {
@@ -8,10 +10,15 @@ export default class Timer extends React.Component<any> {
   //     return { timestamp };
   //   }
   timerStore: any;
+  dispatcher: any;
   constructor(props) {
     super(props);
 
     this.timerStore = new TimerStore();
+    this.dispatcher = new Dispatcher();
+    this.dispatcher.register(
+      this.timerStore.handleActions.bind(this.timerStore)
+    );
 
     this.state = {
       showCounter: this.timerStore.showCounter,
@@ -36,11 +43,11 @@ export default class Timer extends React.Component<any> {
   }
 
   startCounter() {
-    this.timerStore.startCounter();
+    startCounter(this.dispatcher);
   }
 
   stopCounter() {
-    this.timerStore.stopCounter();
+    stopCounter(this.dispatcher);
   }
 
   render() {
