@@ -1,34 +1,46 @@
 import React from "react";
+import TimerStore from "../stores/timerStore";
 
-export default class Timer extends React.Component {
+export default class Timer extends React.Component<any> {
   //   static async getInitialProps({ req }: any) {
   //     console.log("yesy", req);
   //     let timestamp = 10;
   //     return { timestamp };
   //   }
+  timerStore: any;
+  constructor(props) {
+    super(props);
 
-  state = {
-    showCounter: false,
-    timestamp: new Date(),
-    timerInterval: null
-  };
+    this.timerStore = new TimerStore();
+
+    this.state = {
+      showCounter: this.timerStore.showCounter,
+      timestamp: this.timerStore.timestamp,
+      timerInterval: this.timerStore.timerInterval
+    };
+  }
+  //   state = {
+  //     showCounter: timerStore.showCounter,
+  //     timestamp: timerStore.timestamp,
+  //     timerInterval: timerStore.timerInterval
+  //   };
+
+  componentWillMount() {
+    this.timerStore.on("change", () => {
+      this.setState({
+        showCounter: this.timerStore.showCounter,
+        timestamp: this.timerStore.timestamp,
+        timerInterval: this.timerStore.timerInterval
+      });
+    });
+  }
 
   startCounter() {
-    let timestamp = new Date();
-    this.setState({ timestamp: timestamp });
-    let timerInterval = setInterval(() => {
-      let timestamp = new Date();
-      this.setState({ timestamp: timestamp });
-      console.log("yes");
-    }, 1000);
-    this.setState({ timerInterval: timerInterval });
-    this.setState({ showCounter: true });
-    console.log("ok");
+    this.timerStore.startCounter();
   }
 
   stopCounter() {
-    clearInterval(this.state.timerInterval);
-    this.setState({ timerInterval: null, showCounter: false });
+    this.timerStore.stopCounter();
   }
 
   render() {
@@ -36,14 +48,14 @@ export default class Timer extends React.Component {
     return (
       <div className="card text-center">
         <div className="card-body">
-          {this.state.showCounter ? (
+          {this.timerStore.showCounter ? (
             <div className="btn-group" role="group" aria-label="Basic example">
               <button type="button" className="btn btn-secondary">
-                {this.state.timestamp.getHours() +
+                {this.timerStore.timestamp.getHours() +
                   ":" +
-                  this.state.timestamp.getMinutes() +
+                  this.timerStore.timestamp.getMinutes() +
                   ":" +
-                  this.state.timestamp.getSeconds()}
+                  this.timerStore.timestamp.getSeconds()}
               </button>
               <button
                 type="button"
