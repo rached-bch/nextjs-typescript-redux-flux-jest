@@ -14,7 +14,9 @@ export default class Layout extends React.Component {
             content="Description of the next application..."
           />
         </Head>
-        <div className="page-content">{this.props.children}</div>
+        <div className="container main-body">
+          <div className="col-xs-12">{this.props.children}</div>
+        </div>
       </div>
     );
   }

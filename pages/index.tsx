@@ -1,6 +1,7 @@
 import React from "react";
 import { NextPageContext } from "next";
 import Layout from "../components/layout";
+import Timer from "../components/timer";
 
 interface Props {
   userAgent?: string;
@@ -14,6 +15,14 @@ export default class Index extends React.Component<Props> {
 
   render() {
     const { userAgent } = this.props;
-    return <Layout>Your user agent: {userAgent}</Layout>;
+    return (
+      <Layout>
+        <div className="card-columns">
+          <Timer></Timer>
+          <Timer></Timer>
+          <Timer></Timer>
+        </div>
+      </Layout>
+    );
   }
 }
