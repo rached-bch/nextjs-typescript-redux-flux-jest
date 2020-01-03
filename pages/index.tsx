@@ -5,6 +5,7 @@ import Timer from "../components/timer";
 import Announcement from "../components/announcement";
 import { connect } from "react-redux";
 import { range, fromEvent } from "rxjs";
+import { ajax } from "rxjs/ajax";
 import { map, filter } from "rxjs/operators";
 
 interface iProps {
@@ -17,12 +18,23 @@ class Index extends React.Component<iProps> {
   }
 
   componentDidMount() {
-    //create observable that emits click events
-    const source = fromEvent(document.getElementById("button"), "click");
-    //map to string with given event timestamp
-    const example = source.pipe(map(event => `Event time: ${event.timeStamp}`));
-    //output (example): 'Event time: 7276.390000000001'
-    const subscribe = example.subscribe(val => console.log(val));
+    const githubUsers = `https://api.github.com/users?per_page=2`;
+
+    const users = ajax({
+      url: githubUsers,
+      method: "GET",
+      headers: {
+        /*some headers*/
+      },
+      body: {
+        /*in case you need a body*/
+      }
+    });
+
+    const subscribe = users.subscribe(
+      res => console.log(res),
+      err => console.error(err)
+    );
   }
 
   render() {
@@ -38,7 +50,6 @@ class Index extends React.Component<iProps> {
           Comminication test : {announcementMessage}
         </div>
         <Announcement></Announcement>
-        <button id="button">Click</button>
       </Layout>
     );
   }
