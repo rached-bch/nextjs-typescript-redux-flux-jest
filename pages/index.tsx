@@ -46,6 +46,7 @@ class Index extends React.Component<iProps> {
           <Timer></Timer>
           <Timer></Timer>
         </div>
+        <h1>Hello World</h1>
         <div className="alert alert-warning">
           Comminication test : {announcementMessage}
         </div>
