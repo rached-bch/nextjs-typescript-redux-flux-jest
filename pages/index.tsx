@@ -3,18 +3,19 @@ import { NextPageContext } from "next";
 import Layout from "../components/layout";
 import Timer from "../components/timer";
 
-interface Props {
-  userAgent?: string;
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { updateAnnouncement } from "../states/announcement/actions";
+interface IProps {
+  announcementMessage: string;
+  updateAnnouncement: any;
 }
 
-export default class Index extends React.Component<Props> {
-  static async getInitialProps({ req }: NextPageContext) {
-    const userAgent = req ? req.headers["user-agent"] : navigator.userAgent;
-    return { userAgent };
-  }
+interface IState {}
 
+class Index extends React.Component<IProps, IState> {
   render() {
-    const { userAgent } = this.props;
+    const { announcementMessage, updateAnnouncement } = this.props;
     return (
       <Layout>
         <div className="card-columns">
@@ -22,7 +23,23 @@ export default class Index extends React.Component<Props> {
           <Timer></Timer>
           <Timer></Timer>
         </div>
+        <div className="alert alert-info">
+          Announcement: {announcementMessage}
+          <button onClick={() => updateAnnouncement("We are closed today!")}>
+            Close!
+          </button>
+        </div>
       </Layout>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  announcementMessage: state.message
+});
+
+const mapDispatchToProps = dispatch => ({
+  updateAnnouncement: bindActionCreators(updateAnnouncement, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Index);
