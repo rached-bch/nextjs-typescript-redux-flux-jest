@@ -17,25 +17,25 @@ class Index extends React.Component<iProps> {
     super(props);
   }
 
-  componentDidMount() {
-    const githubUsers = `https://api.github.com/users?per_page=2`;
+  // componentDidMount() {
+  //   const githubUsers = `https://api.github.com/users?per_page=2`;
 
-    const users = ajax({
-      url: githubUsers,
-      method: "GET",
-      headers: {
-        /*some headers*/
-      },
-      body: {
-        /*in case you need a body*/
-      }
-    });
+  //   const users = ajax({
+  //     url: githubUsers,
+  //     method: "GET",
+  //     headers: {
 
-    const subscribe = users.subscribe(
-      res => console.log(res),
-      err => console.error(err)
-    );
-  }
+  //     },
+  //     body: {
+
+  //     }
+  //   });
+
+  //   const subscribe = users.subscribe(
+  //     res => console.log(res),
+  //     err => console.error(err)
+  //   );
+  // }
 
   render() {
     const { announcementMessage } = this.props;
