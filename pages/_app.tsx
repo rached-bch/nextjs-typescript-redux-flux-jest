@@ -2,13 +2,13 @@ import React from "react";
 import { Provider } from "react-redux";
 import App, { Container } from "next/app";
 import withRedux from "next-redux-wrapper";
-import { initStore } from "../store";
+import { reduxStore } from "../reduxStore";
 
 interface Props {
   store: any;
 }
 
-export default withRedux(initStore)(
+export default withRedux(reduxStore)(
   class MyApp extends App<Props> {
     static async getInitialProps({ Component, ctx }) {
       return {
